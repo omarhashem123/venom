@@ -26,6 +26,7 @@ Tool designed for fast crawl and extract endpoints
 
 ###### 10- Crawl enpoints authenticated or unauthenticated
 
+###### 11- You can use it in linux or windows
 
 
 
@@ -112,3 +113,8 @@ Tool designed for fast crawl and extract endpoints
   
     -certspotter [CERTSPOTTER]
                         <extract subdomains from certspotter.com>
+
+# Screenshot
+
+
+![](/Screenshot.png)
