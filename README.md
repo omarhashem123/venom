@@ -5,26 +5,26 @@ Tool designed for fast crawl and extract endpoints
 
 # Features
 
-    Fast web crawler for endpoint or unlike other tools you can crawl big list of endpoints
+###### 1- Fast web crawler for endpoint or unlike other tools you can crawl big list of endpoints
 
 
-    Extract allowed and disallowed endpoints from robots.txt for big list of endpoints that you can use disallowed endpoints with other tools to bypass 403 Status_Code to get quick money easily
+###### 2- Extract allowed and disallowed endpoints from robots.txt for big list of endpoints that you can use disallowed endpoints with other tools to bypass 403 Status_Code to get quick money easily
 
-    Fast extracting endpoints from sitemap.xml for list of endpoints 
+###### 3- Fast extracting endpoints from sitemap.xml for list of endpoints 
  
-    So if you faced any problem with tool or your machine have connection problem with internet or you closed tool you don't need to crawl all endpoints again but you can go to file that contain failed threads and complete your crawl where tool stopped from failed threads file
+###### 4- So if you faced any problem with tool or your machine have connection problem with internet or you closed tool you don't need to crawl all endpoints again but you can go to file that contain failed threads and complete your crawl where tool stopped from failed threads file
 
-    Any failed or lack threads you will find it in failed threads file so you can crawl it again
+###### 5- Any failed or lack threads you will find it in failed threads file so you can crawl it again
 
-    randomize User-Agent 
+###### 6- randomize User-Agent 
 
-    Extract subdomains from crt.sh and certspotter.com and crawl it
+###### 7- Extract subdomains from crt.sh and certspotter.com and crawl it
 
-    Extract endpoints from Wayback Machine for subdomain or list of subdomain
+###### 8- Extract endpoints from Wayback Machine for subdomain or list of subdomain
 
-    if you used a lot of threads and WAF detect it you can bypass it by taking control of threads and time to delay between threads
+###### 9- if you used a lot of threads and WAF detect it you can bypass it by taking control of threads and time to delay between threads
 
-    Crawl enpoints authenticated or unauthenticated
+###### 10- Crawl enpoints authenticated or unauthenticated
 
 
 
