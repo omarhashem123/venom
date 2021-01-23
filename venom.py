@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser(usage=bcolors.OKGREEN +"\nto extract endpoints 
     description=bcolors.WARNING + 'description:Tool that spider subdomains and extract endpoints' + bcolors.ENDC)
 parser.add_argument('-f', help='<file contain subdomains>')
 parser.add_argument('-d', help='<domain or subdomain>')
-parser.add_argument('-s', help='<only domains in scope>')
+parser.add_argument('-s', help='<file that contain only domains in scope to validate it and extract out of scope>')
 parser.add_argument('-time', help='<time to sleep between threads>', nargs="?", const=5)
 parser.add_argument('-t', help='<threads>', nargs="?", const=1)
 parser.add_argument('-l', help='<levels of crawl>')
