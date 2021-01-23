@@ -89,7 +89,7 @@ Tool designed for fast crawl and extract endpoints
   
     -d D                  <domain or subdomain>
   
-    -s S                  <only domains in scope>
+    -s S                  <file that contain only domains in scope to validate it and extract out of scope>
   
     -time [TIME]          <time to sleep between threads>
   
