@@ -6,6 +6,9 @@ import random
 import re
 import requests
 
+import colorama
+colorama.init()
+
 
 class bcolors:
     HEADER = '\033[95m'
