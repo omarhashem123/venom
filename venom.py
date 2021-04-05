@@ -19,7 +19,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-parser = argparse.ArgumentParser(usage=bcolors.OKGREEN +"\nto extract endpoints from crawl:" +bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output file> -l <depth level> -s <scope> -time <delay> -spider\nOR\npython3 venom.py -f <file> -t <threads> -o <output file> -l <depth level> -s <scope> -time <delay> -cookie <cookie> -spider\n" +  bcolors.OKGREEN + "to extract disallowed endpoinds and allowed endpoints from robots.txt:" + bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output file> -time <delay> -robots\n" + bcolors.OKGREEN + "to extract endpoints from sitemap.xml:" + bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output file> -time <delay> -sitemap\n" + bcolors.OKGREEN + "to extract endpoints from wayback machine:" + bcolors.ENDC + "\npython3 venom.py -d <domain> -o <output file> -archive\nOR\npython3 venom.py -f <file> -t <threads> -o <output file> -archive\n" + bcolors.OKGREEN + "to extract subdomains from crt.sh:" + bcolors.ENDC + "\npython3 venom.py -d <domain> -o <output file> -crtsh\n" + bcolors.OKGREEN + "to extract subdomains from certspotter:" +bcolors.ENDC + "\npython3 venom.py -d <domain> -o <output file> -certspotter",
+parser = argparse.ArgumentParser(usage=bcolors.OKGREEN +"\nto extract endpoints from crawl:" +bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output> -l <depth level> -s <scope> -time <delay> -spider\nOR\npython3 venom.py -f <file> -t <threads> -o <output> -l <depth level> -s <scope> -time <delay> -cookie <cookie> -spider\n" +  bcolors.OKGREEN + "to extract disallowed endpoinds and allowed endpoints from robots.txt:" + bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output> -time <delay> -robots\n" + bcolors.OKGREEN + "to extract endpoints from sitemap.xml:" + bcolors.ENDC + "\npython3 venom.py -f <file> -t <threads> -o <output> -time <delay> -sitemap\n" + bcolors.OKGREEN + "to extract endpoints from wayback machine:" + bcolors.ENDC + "\npython3 venom.py -d <domain> -o <output> -archive\nOR\npython3 venom.py -f <file> -t <threads> -o <output> -archive\n" + bcolors.OKGREEN + "to extract subdomains from crt.sh:" + bcolors.ENDC + "\npython3 venom.py -d <domain> -o <output file> -crtsh\n",
     description=bcolors.WARNING + 'description:Tool that spider subdomains and extract endpoints' + bcolors.ENDC)
 parser.add_argument('-f', help='<file contain subdomains>')
 parser.add_argument('-d', help='<domain or subdomain>')
@@ -34,7 +34,6 @@ parser.add_argument('-robots', help='<extract allowed endpoints and extract disa
 parser.add_argument('-sitemap', help='<extract endpoints from sitemap.xml>', nargs="?", const='NotNone')
 parser.add_argument('-archive', help='<extract endpoints from Wayback Machine>', nargs="?", const='NotNone')
 parser.add_argument('-crtsh', help='<extract subdomains from crt.sh>', nargs="?", const='NotNone')
-parser.add_argument('-certspotter', help='<extract subdomains from certspotter.com>', nargs="?", const='NotNone')
 args = parser.parse_args()
 
 
@@ -86,6 +85,7 @@ def spider(sub_domain):
                 if re.search(j, link[0]):
             #write endpoint to file
                     file_contain_links.write(link[0] + "\n")
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + link[0] + bcolors.ENDC)
 
         elif re.match("(.*?)\.com(.*?)|(.*?)\.org(.*?)|(.*?)\.net(.*?)|(.*?)\.int(.*?)|(.*?)\.edu(.*?)|(.*?)\.gov(.*?)|(.*?)\.mil(.*?)|(.*?)\.co(.*?)|(.*?)\.us(.*?)|(.*?)\.de(.*?)|(.*?)\.uk(.*?)|(.*?)\.icu(.*?)|(.*?)\.ru(.*?)|(.*?)\.info(.*?)|(.*?)\.top(.*?)|(.*?)\.xyz(.*?)|(.*?)\.tk(.*?)|(.*?)\.cn(.*?)|(.*?)\.ga(.*?)|(.*?)\.cf(.*?)|(.*?)\.nl(.*?)", link[0]):
             if re.match("http", link[0]):
@@ -94,18 +94,21 @@ def spider(sub_domain):
                     if re.search(j, link[0]):
                 # write endpoint to file
                         file_contain_links.write(link[0] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + link[0] + bcolors.ENDC)
             elif re.match("//", link[0]):
                 # extract out of scope
                 for j in scope:
                     if re.search(j, link[0]):
                 # write endpoint to file
                         file_contain_links.write("http:" + link[0] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http:" + link[0] + bcolors.ENDC)
             elif re.match("/", link[0]):
                 # extract out of scope
                 for j in scope:
                     if re.search(j, link[0]):
                 # write endpoint to file
                         file_contain_links.write("http:/" + link[0] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http:/" + link[0] + bcolors.ENDC)
             else:
                 pass
         elif re.match("//", link[0]):
@@ -114,12 +117,14 @@ def spider(sub_domain):
                 if re.search(j, sub_domain + link[0]):
             # write endpoint to file
                     file_contain_links.write("http://" + sub_domain + link[0])
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http://" + link[0] + bcolors.ENDC)
         elif re.match("/", link[0]):
             # extract out of scope
             for j in scope:
                 if re.search(j, sub_domain + link[0]):
             # write endpoint to file
                     file_contain_links.write(sub_domain + link[0] + "\n")
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + sub_domain + link[0] + bcolors.ENDC)
 
         if re.match("http(.*?)", link[1]):
             #extract out of scope
@@ -127,6 +132,7 @@ def spider(sub_domain):
                 if re.search(j, link[1]):
             #write endpoint to file
                     file_contain_links.write(link[1] + "\n")
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + link[1] + bcolors.ENDC)
 
         elif re.match("(.*?)\.com(.*?)|(.*?)\.org(.*?)|(.*?)\.net(.*?)|(.*?)\.int(.*?)|(.*?)\.edu(.*?)|(.*?)\.gov(.*?)|(.*?)\.mil(.*?)|(.*?)\.co(.*?)|(.*?)\.us(.*?)|(.*?)\.de(.*?)|(.*?)\.uk(.*?)|(.*?)\.icu(.*?)|(.*?)\.ru(.*?)|(.*?)\.info(.*?)|(.*?)\.top(.*?)|(.*?)\.xyz(.*?)|(.*?)\.tk(.*?)|(.*?)\.cn(.*?)|(.*?)\.ga(.*?)|(.*?)\.cf(.*?)|(.*?)\.nl(.*?)", link[1]):
             if re.match("http(.*?)", link[1]):
@@ -135,18 +141,21 @@ def spider(sub_domain):
                     if re.search(j, link[1]):
                 # write endpoint to file
                         file_contain_links.write(link[1] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + link[1] + bcolors.ENDC)
             elif re.match("//(.*?)", link[1]):
                 # extract out of scope
                 for j in scope:
                     if re.search(j, link[1]):
                 # write endpoint to file
                         file_contain_links.write("http:" + link[1] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http:" + link[1] + bcolors.ENDC)
             elif re.match("/", link[1]):
                 # extract out of scope
                 for j in scope:
                     if re.search(j, link[1]):
                 # write endpoint to file
                         file_contain_links.write("http:/" + link[1] + "\n")
+                        print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http:/" + link[1] + bcolors.ENDC)
             else:
                 pass
 
@@ -156,12 +165,14 @@ def spider(sub_domain):
                 if re.search(j, sub_domain + link[1]):
             # write endpoint to file
                     file_contain_links.write("http://" + sub_domain + link[1])
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + "http://" + link[1] + bcolors.ENDC)
         elif re.match("/", link[1]):
             # extract out of scope
             for j in scope:
                 if re.search(j, sub_domain + link[1]):
             # write endpoint to file
                     file_contain_links.write(sub_domain + link[1] + "\n")
+                    print(bcolors.FAIL + "[Endpoint from crawl]  " + bcolors.ENDC +bcolors.OKGREEN + sub_domain + link[1] + bcolors.ENDC)
     # delay between threads
     if args.time is not None:
         time.sleep(int(args.time))
@@ -186,11 +197,13 @@ def sitemap_xml(subdomain):
             sitemap_xml(endpoint)
         else:
             file_contain_all_endpoints.write(endpoint + "\n")
+            print(bcolors.FAIL + "[Endpoint from sitemap.xml]  " + bcolors.ENDC +bcolors.OKGREEN + endpoint + bcolors.ENDC)
     for endpoint in extract_all_href_from_parent_sitemap:
         if re.search("(.*?)\.xml(.*?)", endpoint):
             sitemap_xml(endpoint)
         else:
             file_contain_all_endpoints.write(endpoint + "\n")
+            print(bcolors.FAIL + "[Endpoint from sitemap.xml]  " + bcolors.ENDC +bcolors.OKGREEN + endpoint + bcolors.ENDC)
     #delay between threads
     if args.time is not None:
         time.sleep(int(args.time))
@@ -210,12 +223,14 @@ def robots_txt(sub_domain):
 
     for endpoint in extract_allow_endpoint:
         file_contain_allowed_endpoint.write(sub_domain + endpoint.strip() + "\n")
+        print(bcolors.FAIL + "[Endpoint from robots.txt]  " + bcolors.ENDC +bcolors.OKGREEN + sub_domain + endpoint.strip() + bcolors.ENDC)
 
     file_contain_disallow_endpoint = open(args.o + "/disallowed_endpoint_from_robots", "a")
     extract_disallow_endpoint = re.findall("Disallow:(.*?)\n", req.text)
 
     for endpoint in extract_disallow_endpoint:
         file_contain_disallow_endpoint.write(sub_domain + endpoint.strip() + "\n")
+        print(bcolors.FAIL + "[Endpoint from robots.txt]  " + bcolors.ENDC +bcolors.OKGREEN + sub_domain + endpoint.strip()  + bcolors.ENDC)
     #delay between threads
     if args.time is not None:
         time.sleep(int(args.time))
@@ -229,19 +244,8 @@ def crt_sh(domain):
         sub = i["name_value"]
         replaced = sub.replace("*.", "")
         file_contain_endpoints_from_crt_sh.write(replaced + "\n")
+        print(bcolors.FAIL + "[Sub domain from crt.sh]  " + bcolors.ENDC +bcolors.OKGREEN + replaced  + bcolors.ENDC)
 
-
-def cert_spotter(domain):
-    req = requests.get("https://certspotter.com/api/v0/certs?domain=" + domain)
-    file_contain_endpoints_from_cert = open(args.o + "/endpoints_from_cert_spotter", "a")
-    find_dns_names = re.findall('dns_names":\[(.*?)\]', req.text)
-    counter = 0
-    for dns_names in find_dns_names:
-        extract_subs = re.findall('"(.*?)"', find_dns_names[counter])
-        for sub in extract_subs:
-            file_contain_endpoints_from_cert.write(sub + "\n")
-        counter = counter + 1
-    file_contain_endpoints_from_cert.close()
 
 
 def remove_duplicate(path_of_file):
@@ -270,7 +274,7 @@ def logo():
     ██║   ██║█████╗  ██╔██╗ ██║██║   ██║██╔████╔██║
     ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║██║   ██║██║╚██╔╝██║
      ╚████╔╝ ███████╗██║ ╚████║╚██████╔╝██║ ╚═╝ ██║
-      ╚═══╝  ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝
+      ╚═══╝  ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝ version:2.0
     Coded by:Omar Hashem
     Twitter:@omarhashem666                                                                                                                                                                                      
     '''+bcolors.ENDC)
@@ -296,7 +300,7 @@ if __name__ == '__main__':
             subdomains_for_sitemap_xml.append(i + "/sitemap.xml")
         subdomains_for_sitemap_xml = set(subdomains_for_sitemap_xml)
         #send subdomains for sitemap_xml(subdomain)
-        print("Extract endpoints from sitemap")
+        print(bcolors.BOLD + "Extract endpoints from sitemap" + bcolors.ENDC)
         #solve problem of stuck threads
         with concurrent.futures.ThreadPoolExecutor(max_workers=int(args.t)) as execution:
             execution.map(sitemap_xml, subdomains_for_sitemap_xml)
@@ -386,6 +390,7 @@ if __name__ == '__main__':
                 i = "http://" + i
                 subdomains.append(i.strip())
         subdomains = set(subdomains)
+        print(bcolors.BOLD + "Extract endpoints from robots.tx" + bcolors.ENDC)
         #solve problem of stuck threads
         with concurrent.futures.ThreadPoolExecutor(max_workers=int(args.t)) as execution:
             execution.map(robots_txt, subdomains)
@@ -463,6 +468,7 @@ if __name__ == '__main__':
                 i = "http://" + i
                 sub_domains.append(i.strip())
         sub_domains = set(sub_domains)
+        print(bcolors.BOLD + "Extract endpoints from crawl" + bcolors.ENDC)
         with concurrent.futures.ThreadPoolExecutor(max_workers=int(args.t)) as execution:
             execution.map(spider, sub_domains)
 #extract failed threads cuz may be appear error so you will need nt kill script then you can complete from failed threads not from first file
@@ -610,6 +616,7 @@ if __name__ == '__main__':
             subdomains.append(str(args.d))
         except:
             pass
+        print(bcolors.BOLD + "Extract endpoints from Wayback Machine" + bcolors.ENDC)
         if args.f is not None:
             with concurrent.futures.ThreadPoolExecutor(max_workers=int(args.t)) as execution:
                 execution.map(wayback_machine, subdomains)
@@ -624,17 +631,11 @@ if __name__ == '__main__':
             wayback_machine(subdomains[0])
             remove_duplicate(args.o + "/endpoints_from_archive")
 
-    #cert_spotter()
-    elif  args.d is not None and args.o is not None and args.certspotter is not None:
-        logo()
-        os.system("mkdir " + str(args.o))
-        cert_spotter(str(args.d))
-        remove_duplicate(args.o + "/endpoints_from_cert_spotter")
-
     #cert_sh()
     elif  args.d is not None and args.o is not None and args.crtsh is not None:
         logo()
         os.system("mkdir " + str(args.o))
+        print(bcolors.BOLD + "Extract sub domains from cert.sh" + bcolors.ENDC)
         crt_sh(str(args.d))
         remove_duplicate(args.o + "/endpoints_from_crt_sh")
 
