@@ -326,16 +326,12 @@ if __name__ == '__main__':
                                 true_failed_111 = failed_threads_from_sitemap_111.difference(
                                     succeed_threads_from_sitemap_111)
                                 for thread in true_failed_111:
-                                    print(thread)
                                     find = re.findall("(.*?)/sitemap\.xml", thread)
                                     file_contain_failed_threads_111.write(find[0] + "\n")
-                                    print(find[0])
                                 dosent_requested_sub = subdomains_for_sitemap_xml.difference(failed_threads)
                                 for sub in dosent_requested_sub:
-                                    print(sub)
                                     find = re.findall("(.*?)/sitemap\.xml", sub)
                                     file_contain_failed_threads_111.write(find[0] + "\n")
-                                    print(find[0])
                                 file_contain_failed_threads_111.close()
 
                         time.sleep(5)
@@ -348,16 +344,12 @@ if __name__ == '__main__':
                     file_contain_failed_threads_111 = open(args.o + "/failed_threads", "w")
                     true_failed_111 = failed_threads_from_sitemap_111.difference(succeed_threads_from_sitemap_111)
                     for thread in true_failed_111:
-                        print(thread)
                         find = re.findall("(.*?)/sitemap\.xml", thread)
                         file_contain_failed_threads_111.write(find[0] + "\n")
-                        print(find[0])
                     dosent_requested_sub = subdomains_for_sitemap_xml.difference(failed_threads)
                     for sub in dosent_requested_sub:
-                        print(sub)
                         find = re.findall("(.*?)/sitemap\.xml", sub)
                         file_contain_failed_threads_111.write(find[0] + "\n")
-                        print(find[0])
                     file_contain_failed_threads_111.close()
                     if args.time is None: args.time = 0
                     time.sleep(5)
